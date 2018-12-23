@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp" tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/liforum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lintend Forum"
+        android:textSize="45sp"
+       android:layout_gravity="center"
+        android:fontFamily="serif-monospace"
+        android:layout_marginTop="20dp"
+        />
+
+    <TextView
+        android:text="Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="Enter your email"
+        android:maxLines="1"/>
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/liforum"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        android:hint="Enter your password"/>
+
+<Button
+    android:id="@+id/btnlogin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:text="Login"
+    android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not a user yet?"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+         android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/btnsignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Account"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:background="#de6a44"/>
+</LinearLayout>
+    </ScrollView>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginTop="30dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="15dp"
+        app:contentPaddingLeft="10dp"
+        app:contentPaddingRight="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/questionTxt"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Question:"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:layout_below="@+id/questionTxt"
+        android:id="@+id/questionType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="200dp"
+        android:gravity="top"
+        android:hint="Enter your question here "
+        android:background="#fff"
+
+
+
+        />
+
+    <Button
+        android:layout_below="@+id/questionType"
+        android:id="@+id/btnpost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="post"
+        />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="6dp"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="16dp"
+    >
+    <TextView
+        android:id="@+id/h"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hi"
+        android:textSize="100dp"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_below="@+id/h"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="150dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="10dp"
+        app:contentPaddingRight="10dp"
+        app:contentPaddingLeft="10dp"
+        app:cardMaxElevation="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/username"
+                android:text="popular"
+                android:textSize="20dp"
+                android:fontFamily="sans-serif"
+                />
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8:00pm"
+                android:textSize="10sp"
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/username"/>
+            <View style="@style/Divider"
+                android:layout_below="@+id/time"/>
+
+            <TextView
+                android:layout_below="@+id/time"
+                android:id="@+id/answerTitle"
+                android:padding="5dp"
+                android:text="What is your name?"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"/>
+            <View style="@style/Divider"
+                android:id="@+id/view"
+                android:layout_below="@id/answerTitle"
+                />
+
+            <View style="@style/Divider"
+                android:layout_below="@+id/questionTitle"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/like_counter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_like"
+                    android:text="365"
+                    android:textSize="16sp"
+                    android:drawablePadding="7dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/ans_counter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_answer"
+                    android:text="365"
+                    android:textSize="16sp"
+                    android:drawablePadding="7dp"
+                    android:layout_weight="1"/>
+
+
+                <Button
+                    android:id="@+id/btncomment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/questionTitle"
+                    android:clickable="true"
+                    android:text="Answer"
+                    android:drawableLeft="@drawable/ic_answer_post"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:background="#FFF"
+                    android:paddingLeft="3dp"
+                    android:textColor="#000"
+                    android:layout_weight="1"></Button>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
