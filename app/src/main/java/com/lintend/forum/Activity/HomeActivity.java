@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -14,7 +15,7 @@ import com.lintend.forum.R;
 import com.lintend.forum.SessionManager;
 
 public class HomeActivity extends AppCompatActivity {
-  public BottomNavigationViewEx bottomNavigationView;
+  public BottomNavigationView bottomNavigationView;
   Toolbar toolbar;
 
     FragmentTransaction ft;
@@ -33,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         ft= getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.layoutmid,new HomeTabActivity());
         ft.commit();
+
 
 
 
@@ -59,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
                         ft.commit();
                         break;
                     }
-                    case R.id.ic_post: {
+                  /*  case R.id.ic_post: {
                         ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.layoutmid, new PostTabActivity());
                         ft.commit();
@@ -72,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                         ft.replace(R.id.layoutmid, new SearchTabActivity());
                         ft.commit();
                         break;
-                    }
+                    }*/
                     case R.id.ic_about: {
                         ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.layoutmid, new About_swipable_activity());
@@ -85,6 +87,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
     @Override

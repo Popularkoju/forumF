@@ -17,6 +17,7 @@
                 android:minHeight="?attr/actionBarSize"
                 android:id="@+id/tabs"
                 android:background="@drawable/white_gray_top"
+                app:menu="@menu/top_search_bar"
                 >
 
 

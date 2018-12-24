@@ -34,7 +34,7 @@ public class QuestionAnswerDisplay extends AppCompatActivity {
     TextView uname, time1, question1; // question
 
 
-SessionManager sm;
+
 String id;
 
     TextView text;

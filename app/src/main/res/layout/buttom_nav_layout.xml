@@ -6,7 +6,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         >
-        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+        <android.support.design.widget.BottomNavigationView
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/buttom_nav_bar"
@@ -15,7 +15,7 @@
 
             >
 
-        </com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx>
+        </android.support.design.widget.BottomNavigationView>
 
 
 

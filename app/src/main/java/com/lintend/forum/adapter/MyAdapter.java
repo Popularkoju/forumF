@@ -17,9 +17,9 @@ public class MyAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0){
-            return new AboutTabActivity();
+            return new  MyPostActivity();
         }else if(position==1) {
-            return new MyPostActivity();
+            return new AboutTabActivity();
             }else {
             return null;
         }
@@ -30,9 +30,9 @@ public class MyAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return "About";
-        } else if (position == 1) {
             return "My Post";
+        } else if (position == 1) {
+            return "About";
             } else {
             return null;
         }

@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                                 sessionManager.createLoginSession(emailE);
 //                                new
                                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
 
                                LoginActivity.this.finish();

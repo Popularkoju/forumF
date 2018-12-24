@@ -6,8 +6,19 @@ package com.lintend.forum;
      String Question;
      String Time;
      String id;
+
      String vote_count;
      String answer_id;
+
+     public String getPost_qid() {
+         return post_qid;
+     }
+
+     public void setPost_qid(String post_qid) {
+         this.post_qid = post_qid;
+     }
+
+     String post_qid;
      public String getAnswer_id() {
          return answer_id;
      }

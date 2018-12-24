@@ -35,5 +35,7 @@ dependencies {
 
     implementation 'com.jpardogo.materialtabstrip:library:1.1.1'
 
+    implementation 'com.tapadoo.android:alerter:3.0.0'
+
 
 }
