@@ -15,19 +15,44 @@
             android:layout_margin="5dp">
 
     <TextView
+        android:layout_marginTop="5dp"
         android:id="@+id/questionTxt"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="Question:"
+      style= "@drawable/custom_toast_border"
+        android:text="Question"
+
+
         android:textSize="20dp"/>
             <View style="@style/Divider"
                 android:id="@+id/view"
-                android:layout_height="0.5dp"
+
+                android:layout_height="2dp"
+                android:background="@color/white"
                 android:layout_below="@id/questionTxt"
                 />
+          <!--  <TextView
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose a Category"
+                android:textSize="17sp"
+                android:layout_marginTop="3dp"
+                style="bold"
+                android:layout_below="@+id/questionTxt"/>-->
+
+           <!-- <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/category"
+                android:layout_centerHorizontal="true"
+                >-->
+
+            <!--</Spinner>-->
 
     <EditText
-        android:layout_below="@+id/questionTxt"
+        android:layout_below="@+id/view"
         android:id="@+id/questionType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

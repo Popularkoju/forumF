@@ -29,7 +29,7 @@ import com.lintend.forum.DataModule;
 import com.lintend.forum.R;
 import com.lintend.forum.SessionManager;
 import com.lintend.forum.adapter.MyPostAdapter;
-import com.tapadoo.alerter.Alerter;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,13 +107,14 @@ public class MyPostActivity extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(c, "No internet", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

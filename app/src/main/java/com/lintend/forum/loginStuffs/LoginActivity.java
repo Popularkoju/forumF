@@ -69,65 +69,76 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("error",response);
-                        try {
-                            JSONObject obj1 = new JSONObject(response);
+                if (email.getText().toString().trim().isEmpty()||(password.getText().toString().trim().isEmpty())) {
+                    email.setError("Please fill all the forms");
 
-                            String emailE =email.getText().toString();
+                    } else {
+
+                    dialog.show();
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.i("error", response);
+                            try {
+                                JSONObject obj1 = new JSONObject(response);
+
+                                String emailE = email.getText().toString();
 
 
-                            if (obj1.names().get(0).equals("success")) {
-                                dialog.dismiss();
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                //created session
+                                if (obj1.names().get(0).equals("success")) {
+                                    dialog.dismiss();
+                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    //created session
 
-                                sessionManager.createLoginSession(emailE);
+                                    sessionManager.createLoginSession(emailE);
 //                                new
-                                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i);
+                                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i);
 
-                               LoginActivity.this.finish();
-                            } else {
+                                    LoginActivity.this.finish();
+                                } else {
+                                    dialog.dismiss();
+                                    Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (Exception e) {
                                 dialog.dismiss();
-                                Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Exception Caught", Toast.LENGTH_SHORT).show();
                             }
 
-                        } catch (Exception e) {
-                            dialog.dismiss();
-                            Toast.makeText(LoginActivity.this, "Exception Caught", Toast.LENGTH_SHORT).show();
                         }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            dialog.dismiss();
+                            Toast.makeText(LoginActivity.this, "No Internet Connectivity", Toast.LENGTH_SHORT).show();
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "No Internet Connectivity", Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> mymap = new HashMap<>();
 
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> mymap = new HashMap<>();
+                            mymap.put("email", email.getText().toString());
+                            mymap.put("password", password.getText().toString());
+                            return mymap;
+                        }
+                    };
 
-                        mymap.put("email", email.getText().toString());
-                        mymap.put("password", password.getText().toString());
-                        return mymap;
-                    }
-                };
-
-                requestQueue.add(stringRequest);
+                    requestQueue.add(stringRequest);
+                }
             }
         });
 
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
 

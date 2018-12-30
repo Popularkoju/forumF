@@ -32,7 +32,7 @@ public class MyAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return "My Post";
         } else if (position == 1) {
-            return "About";
+            return "Profile";
             } else {
             return null;
         }

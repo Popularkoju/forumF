@@ -7,8 +7,19 @@ package com.lintend.forum;
      String Time;
      String id;
 
+
      String vote_count;
      String answer_id;
+
+     public String getImage() {
+         return Image;
+     }
+
+     public void setImage(String image) {
+         Image = image;
+     }
+
+     String Image;
 
      public String getPost_qid() {
          return post_qid;

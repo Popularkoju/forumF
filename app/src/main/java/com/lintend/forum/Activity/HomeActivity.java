@@ -1,10 +1,14 @@
 package com.lintend.forum.Activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,11 +18,17 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lintend.forum.R;
 import com.lintend.forum.SessionManager;
 
+
 public class HomeActivity extends AppCompatActivity {
   public BottomNavigationView bottomNavigationView;
   Toolbar toolbar;
 
     FragmentTransaction ft;
+
+    public static Context contextOfAppliction;
+    public static  Context getContextOfAppliction(){
+        return  contextOfAppliction;
+    }
 
 
     @Override
@@ -34,6 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         ft= getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.layoutmid,new HomeTabActivity());
         ft.commit();
+
+        contextOfAppliction = getApplicationContext();
 
 
 
@@ -92,9 +104,24 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
+        //super.onBackPressed();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("Exit");
+        builder.setMessage("Are you sure you want to leave?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(Intent.ACTION_MAIN);
+                i.addCategory(Intent.CATEGORY_HOME);
+                startActivity(i);
+                finish();
+                System.exit(0);
+            }
+        });
+        builder.setNegativeButton("No", null);
+        builder.create().show();
 
     }
     }
-

@@ -15,18 +15,24 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,7 +46,7 @@ import com.lintend.forum.DataModule;
 import com.lintend.forum.R;
 import com.lintend.forum.SessionManager;
 import com.lintend.forum.adapter.HomeTabAdapter;
-import com.tapadoo.alerter.Alerter;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,7 +63,8 @@ import java.util.Objects;
 
 public class HomeTabActivity extends Fragment {
 
-
+// search widget
+    SearchView searchView;
 
 
     FloatingActionButton floatingActionButton;
@@ -79,7 +86,8 @@ public class HomeTabActivity extends Fragment {
     String url = "http://popularkoju.com.np/id1277129_lintendforum/question_display.php";
     String url1 = "http://popularkoju.com.np/id1277129_lintendforum/question_entry.php";
     RequestQueue requestQueue;
-    ListView list;
+    /*ListView list;
+    HomeTabAdapter adapter;*/
     List<DataModule> mydata = new ArrayList<>();
 
 
@@ -88,6 +96,28 @@ public class HomeTabActivity extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.hometab_layout, container, false);
+
+        searchView = v.findViewById(R.id.searchview); // search view
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//spinner
+
+
+
+        /*--------------------------------------------------------------------------searchView--------------------------------------------------------------------------*/
+     /*   searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                new HomeTabAdapter(getContext(), mydata).getFilter().filter(s);
+                return false;
+            }
+        });*/
+
+
 //        like = v.findViewById(R.id.btnlike);
 //        progressBar = v.findViewById(R.id.cardProgressDialog);
 //        answer = v.findViewById(R.id.btncomment);
@@ -126,91 +156,100 @@ public class HomeTabActivity extends Fragment {
             @Override
             public void onClick(View view) {
 
-                 View vi = LayoutInflater.from(getContext()).inflate(R.layout.post_tab_layout,null);
+                View vi = LayoutInflater.from(getContext()).inflate(R.layout.post_tab_layout, null);
 
-              Button post = vi.findViewById(R.id.btnpost);
-               final EditText question = vi.findViewById(R.id.questionType);
+                final Button post = vi.findViewById(R.id.btnpost);
+                final EditText question = vi.findViewById(R.id.questionType);
 
-                progressDialog =new ProgressDialog(getContext());
+                progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Please Wait, Posting your question");
                 final SessionManager sessionManager = new SessionManager(getActivity());
-                final HashMap<String, String> map= sessionManager.getUserDetails();
+                final HashMap<String, String> map = sessionManager.getUserDetails();
 
-                AlertDialog.Builder alert =new AlertDialog.Builder(getContext());
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                 alert.setView(vi);
-                final AlertDialog dialog =alert.create();
+                final AlertDialog dialog = alert.create();
                 dialog.show();
 
-               post.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       requestQueue = Volley.newRequestQueue(getContext());
-                       StringRequest sr = new StringRequest(Request.Method.POST, url1, new Response.Listener<String>() {
-                           @Override
-                           public void onResponse(String response) {
-                               try {
-                                   JSONObject obj1 = new JSONObject(response);
-
-                                   if (obj1.names().get(0).equals("success")) {
-                                       progressDialog.dismiss();
-
-                                       Snackbar.make(getView(), "Question Posted Successfully", Snackbar.LENGTH_LONG)
-                                               .setAction("Action", null).show();
-                                              /* if(Alerter.isShowing()){
-                                                   Alerter.hide();
-                                               }
-                                               Alerter.create(getActivity())
-                                                       .setTitle("Question Posted")
-                                                       .setText("Your question has been added")
-                                                       .setDuration(3000)
-                                                       .enableSwipeToDismiss()
-                                                       .enableIconPulse(true)
-                                                       .show();*/
-
-                                       dialog.dismiss();
 
 
+                    post.setOnClickListener(new View.OnClickListener() {
 
-                                   } else {
-                                       progressDialog.cancel();
-                                       Toast.makeText(getContext(), "post failed", Toast.LENGTH_SHORT).show();
-                                   }
-                               } catch (Exception e) {
-                                   progressDialog.dismiss();
-                                   Toast.makeText(getContext(), "Exception Caught", Toast.LENGTH_SHORT).show();
-                               }
+                        @Override
+                        public void onClick(View v) {
+                            if (question.getText().toString().trim().isEmpty()) {
+                                question.setError("Question field cannot be empty ");
+                            } else {
+                                progressDialog.show();
 
-                           }
-                       }, new Response.ErrorListener() {
-                           @Override
-                           public void onErrorResponse(VolleyError error) {
-                               progressDialog.dismiss();
-                               Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                                requestQueue = Volley.newRequestQueue(getContext());
+                                StringRequest sr = new StringRequest(Request.Method.POST, url1, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            JSONObject obj1 = new JSONObject(response);
 
-                           }
-                       }) {
-                           @Override
-                           protected Map<String, String> getParams() throws AuthFailureError {
-                               Map<String, String> myMap = new HashMap<>();
-                               myMap.put("question_title", question.getText().toString());
-                               myMap.put("email",map.get(sessionManager.KEY_EMAIL));
-                               myMap.put("date_time", currrentdateTime);
-                               return myMap;
+                                            if (obj1.names().get(0).equals("success")) {
+                                                progressDialog.dismiss();
+                                                dialog.dismiss();
 
-                           }
+                                               /* Snackbar.make(getView(), "Question Posted Successfully", Snackbar.LENGTH_LONG)
+                                                        .setAction("Action", null).show();*/
+                                                Toast toast = new Toast(getContext());
+                                                toast.setGravity(Gravity.CENTER, 0, -150);
+                                                toast.setDuration(Toast.LENGTH_SHORT);
+                                                View converview = LayoutInflater.from(getContext()).inflate(R.layout.custom_toast_post_success, null);
+                                                toast.setView(converview);
+                                                toast.show();
 
 
 
 
-                       };
+                                            } else {
+                                                progressDialog.cancel();
+                                                dialog.dismiss();
+                                                Snackbar.make(getView(), "Question Post Failed", Snackbar.LENGTH_LONG)
+                                                        .setAction("Action", null).show();
+                                            }
+                                        } catch (Exception e) {
+                                            progressDialog.dismiss();
+                                            dialog.dismiss();
+                                            Toast.makeText(getContext(), "Exception Caught", Toast.LENGTH_SHORT).show();
+                                        }
 
-                       requestQueue.add(sr);
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        progressDialog.dismiss();
+                                        Snackbar.make(getView(), "No Internet Connection", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
 
-                   }
-               });
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> myMap = new HashMap<>();
+                                        myMap.put("question_title", question.getText().toString());
+                                        myMap.put("email", map.get(sessionManager.KEY_EMAIL));
+                                        myMap.put("date_time", currrentdateTime);
+                                        return myMap;
+
+                                    }
 
 
-            }
+                                };
+
+                                requestQueue.add(sr);
+
+                            }
+                        }
+
+                    });
+
+
+                }
+
         });
 
 
@@ -232,11 +271,6 @@ public class HomeTabActivity extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-
-
-
-
         requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -257,10 +291,12 @@ public class HomeTabActivity extends Fragment {
                         mydata.add(m);
 
                     }
-                    Toast.makeText(getContext(), "Refreshed ", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getContext(), "Refreshed ", Toast.LENGTH_LONG).show();
+
 
 
                           recyclerView.setAdapter(new HomeTabAdapter(getContext(), mydata));
+
 
 
                 } catch (Exception e) {
@@ -269,8 +305,8 @@ public class HomeTabActivity extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-              new AlertDialog.Builder(getActivity())
+                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+             /* new AlertDialog.Builder(getActivity())
                       .setIcon(android.R.drawable.ic_dialog_alert)
                       .setTitle("NO INTERNET")
                       .setMessage("Connect Please")
@@ -281,7 +317,7 @@ public class HomeTabActivity extends Fragment {
                           }
                       })
                       .show();
-
+*/
 
             }
         });
@@ -289,7 +325,7 @@ public class HomeTabActivity extends Fragment {
         }
 
 
-    @Override
+   /* @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -300,8 +336,7 @@ public class HomeTabActivity extends Fragment {
             Toast.makeText(getContext(), "searching", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
-    }
-
+    }*/
 
 
 

@@ -3,6 +3,7 @@ package com.lintend.forum.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.lintend.forum.DataModule;
 import com.lintend.forum.R;
+import com.lintend.forum.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,8 @@ import java.util.Map;
 public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<QuestionAnswerActivityAdapter.MyViewHolder> {
 
     RequestQueue requestQueue;
-    String url = "http://popularkoju.com.np/id1277129_lintendforum/vote_update.php";
+    String url = "http://popularkoju.com.np/id1277129_lintendforum/voting_task.php";
+        SessionManager sm;
 
 
 
@@ -47,7 +49,11 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(c).inflate(R.layout.answer_display_layout,null);
+
+
+
         return new MyViewHolder(view);
+
     }
 
     @Override
@@ -61,6 +67,10 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
 
         String vi= list.get(i).getVote_count();
         final int[] count = {Integer.parseInt(vi)};
+        sm = new SessionManager(c);
+        HashMap<String, String> map = sm.getUserDetails();
+        final String userEmail = map.get(SessionManager.KEY_EMAIL);
+
 
 
 
@@ -72,6 +82,7 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
         myViewHolder.counter_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                count[0]++;
                myViewHolder.counter.setText(String.valueOf(count[0]));
@@ -86,14 +97,31 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
                         try {
                             JSONObject obj1 =  new JSONObject(response);
 
-                            if(obj1.names().get(0).equals("success")){
-                                Toast.makeText(c, "Vote up", Toast.LENGTH_SHORT).show();
+                            if(obj1.names().get(1).equals("success")){
+                               // Toast.makeText(c, "Vote up", Toast.LENGTH_SHORT).show();
+
+                                    Toast toast = new Toast(c);
+                                    toast.setGravity(Gravity.CENTER, 0, -150);
+                                    toast.setDuration(Toast.LENGTH_LONG);
+                                    //LayoutInflater inflater = getLayoutInflater();
+                                    View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_up, null);
+                                    toast.setView(converview);
+                                    toast.show();
+
                             }else{
-                                Toast.makeText(c, "vote failed", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(c, "You have Already Voted", Toast.LENGTH_SHORT).show();
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(c, "You have already voted", Toast.LENGTH_SHORT).show();
+                            Toast toast = new Toast(c);
+                            toast.setGravity(Gravity.CENTER, 0, -150);
+                            toast.setDuration(Toast.LENGTH_LONG);
+                            //LayoutInflater inflater = getLayoutInflater();
+                            View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_done, null);
+                            toast.setView(converview);
+                            toast.show();
                         }
 
                     }
@@ -109,16 +137,14 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
                         Map<String,String> mymap = new HashMap<>();
                         mymap.put("answer_id",ans_id);
                         mymap.put("vote_count",vl);
+                        mymap.put("email", userEmail);
                         return  mymap;
                     }
+
+
                 };
                 requestQueue.add(stringRequest);
-
-
-
-
-
-            }
+                }
         });
 /***************************************************Counter down*************************************************        */
         myViewHolder.counter_down.setOnClickListener(new View.OnClickListener() {
@@ -142,13 +168,28 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
                                 JSONObject obj1 =  new JSONObject(response);
 
                                 if(obj1.names().get(0).equals("success")){
-                                    Toast.makeText(c, "Vote down", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(c, "Vote down", Toast.LENGTH_SHORT).show();
+                                    Toast toast = new Toast(c);
+                                    toast.setGravity(Gravity.CENTER, 0, -150);
+                                    toast.setDuration(Toast.LENGTH_LONG);
+                                    //LayoutInflater inflater = getLayoutInflater();
+                                    View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_up, null);
+                                    toast.setView(converview);
+                                    toast.show();
+
                                 }else{
-                                    Toast.makeText(c, "vote failed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(c, "You have already voted", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(c, "You have already voted", Toast.LENGTH_SHORT).show();
+                                Toast toast = new Toast(c);
+                                toast.setGravity(Gravity.CENTER, 0, -150);
+                                toast.setDuration(Toast.LENGTH_LONG);
+                                //LayoutInflater inflater = getLayoutInflater();
+                                View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_done, null);
+                                toast.setView(converview);
+                                toast.show();
                             }
 
                         }
@@ -164,6 +205,7 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
                             Map<String,String> mymap = new HashMap<>();
                             mymap.put("answer_id",ans_id);
                             mymap.put("vote_count",vld);
+                            mymap.put("email",userEmail );
                             return  mymap;
                         }
                     };
@@ -209,8 +251,13 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
             counter_up= itemView.findViewById(R.id.arrowup);
             counter_down= itemView.findViewById(R.id.arrowdown);
             convert = itemView;
+
         }
+
+        }
+
     }
 
 
-}
+
+

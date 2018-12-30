@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswerDisplayAdapter.MyViewHolder> {
     RequestQueue requestQueue;
-    String url = "http://popularkoju.com.np/id1277129_lintendforum/vote_update.php";
+    String url = "http://popularkoju.com.np/id1277129_lintendforum/voting_task.php";
     Context c;
      List<DataModule> list;
     public MyPostAnswerDisplayAdapter(Context applicationContext, List<DataModule> mydata) {
@@ -82,13 +83,24 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
                             JSONObject obj1 =  new JSONObject(response);
 
                             if(obj1.names().get(0).equals("success")){
-                                Toast.makeText(c, "Vote up", Toast.LENGTH_SHORT).show();
+                                Toast toast = new Toast(c);
+                                toast.setGravity(Gravity.CENTER, 0, -150);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_up, null);
+                                toast.setView(converview);
+                                toast.show();
                             }else{
                                 Toast.makeText(c, "vote failed", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
+                            Toast toast = new Toast(c);
+                            toast.setGravity(Gravity.CENTER, 0, -150);
+                            toast.setDuration(Toast.LENGTH_SHORT);
+                            View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_done, null);
+                            toast.setView(converview);
+                            toast.show();
                         }
 
                     }
@@ -137,14 +149,26 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
                                 JSONObject obj1 =  new JSONObject(response);
 
                                 if(obj1.names().get(0).equals("success")){
-                                    Toast.makeText(c, "Vote down", Toast.LENGTH_SHORT).show();
+                                    Toast toast = new Toast(c);
+                                    toast.setGravity(Gravity.CENTER, 0, -150);
+                                    toast.setDuration(Toast.LENGTH_SHORT);
+                                    View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_up, null);
+                                    toast.setView(converview);
+                                    toast.show();
                                 }else{
                                     Toast.makeText(c, "vote failed", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
-                            }
+                               // Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
+
+                                Toast toast = new Toast(c);
+                                toast.setGravity(Gravity.CENTER, 0, -150);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                View converview = LayoutInflater.from(c).inflate(R.layout.custom_toast_vote_done, null);
+                                toast.setView(converview);
+                                toast.show();                           }
+
 
                         }
                     }, new Response.ErrorListener() {

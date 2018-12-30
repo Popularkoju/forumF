@@ -86,7 +86,8 @@ public class PostTabActivity extends Fragment {
                             if (obj1.names().get(0).equals("success")) {
                                 dialog.dismiss();
 
-                                Toast.makeText(getContext(), "post successful", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getContext(), "post successful", Toast.LENGTH_SHORT).show();
+
 
 
 

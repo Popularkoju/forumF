@@ -13,7 +13,7 @@
     >
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="400dp"
 
         app:cardElevation="10dp"
         app:contentPaddingRight="10dp"
@@ -23,6 +23,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
 
 
         <TextView
@@ -35,8 +37,44 @@
             android:fontFamily="sans-serif"
             android:layout_marginBottom="5dp"
             />
-        <TextView
+        <View style="@style/Divider"
+        android:layout_below="@+id/details"
+        android:layout_marginTop="0dp"
+            android:background="@color/white"/>
+        <ImageView
+             android:layout_marginTop="20dp"
+            android:id="@+id/userImage"
             android:layout_below="@+id/details"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/user_image"
+            android:layout_marginBottom="20dp"
+
+            />
+        <TextView
+            android:id="@+id/messageHere"
+            android:layout_below="@+id/userImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/chooseImage"
+            android:layout_toRightOf="@+id/userImage"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose"/>
+        <Button
+            android:id="@+id/uploadImage"
+            android:layout_toRightOf="@+id/userImage"
+            android:layout_below="@+id/chooseImage"
+            android:layout_marginLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="upload"/>
+        <TextView
+            android:layout_below="@+id/messageHere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/accountName"
@@ -63,7 +101,8 @@
 
         <View style="@style/Divider"
             android:layout_below="@+id/accountEmail"
-            android:layout_marginTop="35dp"/>
+            android:layout_marginTop="35dp"
+            android:background="@color/white"/>
 
         <Button
             android:id="@+id/logout"
