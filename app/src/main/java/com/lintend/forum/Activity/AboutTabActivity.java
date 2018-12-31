@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,8 @@ import com.lintend.forum.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -54,7 +58,7 @@ import static android.app.Activity.RESULT_OK;
 public class AboutTabActivity extends Fragment {
     SessionManager sm;
     RequestQueue requestQueue;
-    private static final int INT_CONST_CAM = 5, SELECT_FILE = 0;
+    private static final int INT_CONST_CAM = 5;
     int permissionCheck;
     Uri dataUri;
     ProgressDialog dialog;
@@ -91,15 +95,17 @@ public class AboutTabActivity extends Fragment {
         final String userEmail = map.get(SessionManager.KEY_EMAIL);
 
         email.setText(userEmail);
+        permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 12);
+        }
 
         // choose image -------------------------------------------------------------------
         btnchooseImage.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 12);
-                }
+
                 selectImage();
                 }
         });
@@ -115,6 +121,12 @@ public class AboutTabActivity extends Fragment {
                    // dialog.setCancelable(false);
                     //dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                     dialog.show();
+
+                    ByteArrayOutputStream bit = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,100, bit);
+                    byte[] imageBytes =bit.toByteArray();
+                    final String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
 
                      requestQueue = Volley.newRequestQueue(getContext());
                      StringRequest stringRequest = new StringRequest(Request.Method.POST, imageUploadUrl, new Response.Listener<String>() {
@@ -147,8 +159,8 @@ public class AboutTabActivity extends Fragment {
                          protected Map<String, String> getParams() throws AuthFailureError {
                              Map<String, String > mymap = new HashMap<>();
                              mymap.put("email",userEmail);
-                             mymap.put("url", "hkhk");
-                             mymap.put("name","jjjjj");
+                             mymap.put("url", imageString);
+                             mymap.put("name","ukhkhj");
                              return mymap;
                          }
                      };
@@ -243,10 +255,10 @@ public class AboutTabActivity extends Fragment {
 
 
 
-        Intent i = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
     //            */* for all types of data , image/* all types of images
         i.setType("image/*");
-        startActivityForResult(i, INT_CONST_CAM); // create field int_ cons
+        startActivityForResult(i.createChooser(i, "Select Image"), INT_CONST_CAM); // create field int_ cons
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -271,16 +283,25 @@ public class AboutTabActivity extends Fragment {
                 dataUri = data.getData(); // data here is from Intent data above(parameter)
                 userImage.setImageURI(dataUri);
             }*/
-        if(requestCode == INT_CONST_CAM && resultCode==RESULT_OK ){
+        if(requestCode == INT_CONST_CAM && resultCode==RESULT_OK && data!=null && data.getData()!=null ){
             dataUri= data.getData(); // data here is from Intent data above(parameter)
+
+
             try {
+                InputStream inputStream = applicationContext.getContentResolver().openInputStream(dataUri);
+                bitmap = BitmapFactory.decodeStream(inputStream);
+                userImage.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+         /*   try {
                 bitmap = MediaStore.Images.Media.getBitmap(applicationContext.getContentResolver(), dataUri);
 
                 userImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+*/
 
 //           userImage.setImageURI(dataUri);
 
