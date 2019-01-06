@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -30,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     SessionManager sessionManager;
 
     EditText email, password;
-    Button login, signup;
+    Button login;
+    TextView signup;
     RequestQueue requestQueue;
     String url ="http://popularkoju.com.np//id1277129_lintendforum/login.php";
     ProgressDialog dialog ;
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_layout);
         email =findViewById(R.id.email);
         password =findViewById(R.id.password);
         login = findViewById(R.id.btnlogin);
@@ -69,10 +71,13 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (email.getText().toString().trim().isEmpty()||(password.getText().toString().trim().isEmpty())) {
+                if (email.getText().toString().trim().isEmpty()) {
                     email.setError("Please fill all the forms");
 
-                    } else {
+
+                    } else if((password.getText().toString().trim().isEmpty())) {
+                    password.setError("Please fill all the forms");
+                }else {
 
                     dialog.show();
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

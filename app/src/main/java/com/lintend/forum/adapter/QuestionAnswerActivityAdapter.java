@@ -167,7 +167,7 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
                             try {
                                 JSONObject obj1 =  new JSONObject(response);
 
-                                if(obj1.names().get(0).equals("success")){
+                                if(obj1.names().get(1).equals("success")){
                                    // Toast.makeText(c, "Vote down", Toast.LENGTH_SHORT).show();
                                     Toast toast = new Toast(c);
                                     toast.setGravity(Gravity.CENTER, 0, -150);

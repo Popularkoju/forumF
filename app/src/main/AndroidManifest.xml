@@ -35,6 +35,8 @@
             android:name=".Activity.QuestionAnswerDisplay"
             android:screenOrientation="portrait" />
         <activity android:name=".Activity.MyPostAnswerDisplayActivity"></activity>
+
+        <service android:name=".service.MyService" />
     </application>
 
 </manifest>

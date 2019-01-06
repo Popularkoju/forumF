@@ -7,5 +7,13 @@
     <color name="white">#C51162</color>
     <color name="lgreen">#64DD17</color>
 
+    <color name="startblue">#096cdf</color>
+    <color name="endblue">#0bcce6</color>
+    <color name="graylight">#fafafa</color>
+
+
+
+
+
 </resources>
 <!--<color name="colorPrimaryDark">#C51162</color>-->

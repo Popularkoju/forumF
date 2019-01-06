@@ -11,6 +11,15 @@ package com.lintend.forum;
      String vote_count;
      String answer_id;
 
+     public String getAnswerCount() {
+         return AnswerCount;
+     }
+
+     public void setAnswerCount(String answerCount) {
+         AnswerCount = answerCount;
+     }
+
+     String AnswerCount;
      public String getImage() {
          return Image;
      }

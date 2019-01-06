@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,7 +23,10 @@
         app:cardElevation="10dp"
         app:contentPaddingRight="10dp"
         app:contentPaddingLeft="10dp"
-        app:cardMaxElevation="15dp">
+        app:cardMaxElevation="15dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:stateListAnimator="@anim/animation"
+        android:clickable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,18 +37,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/username"
+                android:layout_toRightOf="@id/userImageInQuestion"
                 android:text="popular"
+                android:layout_marginLeft="4dp"
                 android:textSize="20dp"
                 android:fontFamily="sans-serif"
                 />
             <TextView
                 android:id="@+id/time"
+                android:layout_toRightOf="@id/userImageInQuestion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8:00pm"
                 android:textSize="10sp"
+                android:layout_marginLeft="4dp"
                 android:layout_marginTop="0dp"
                 android:layout_below="@+id/username"/>
+
+            <ImageView
+
+                android:id="@+id/userImageInQuestion"
+                android:layout_width="30dp"
+                android:layout_marginTop="7dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_user"/>
             <View style="@style/Divider"
                 android:layout_below="@+id/time"/>
 
@@ -128,3 +144,4 @@
 
 
 </RelativeLayout>
+

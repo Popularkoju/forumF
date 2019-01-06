@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -12,6 +13,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -65,6 +69,7 @@ public class HomeTabActivity extends Fragment {
 
 // search widget
     SearchView searchView;
+    String qd;
 
 
     FloatingActionButton floatingActionButton;
@@ -74,6 +79,7 @@ public class HomeTabActivity extends Fragment {
     RecyclerView recyclerView;
 //    Button like, answer;
     ProgressDialog progressDialog;
+    SwipeRefreshLayout refresh;
 
     //
     Calendar calendar= Calendar.getInstance();
@@ -83,8 +89,10 @@ public class HomeTabActivity extends Fragment {
     String currentdate = DateFormat.getDateInstance( DateFormat.MEDIUM).format(calendar.getTime());
     String currrentdateTime = currentdate + " "+"at" +" " + strtime;
 
-    String url = "http://popularkoju.com.np/id1277129_lintendforum/question_display.php";
+   // String url = "http://popularkoju.com.np/id1277129_lintendforum/question_display.php";
+     String url = "http://popularkoju.com.np/id1277129_lintendforum/question_display_image.php";
     String url1 = "http://popularkoju.com.np/id1277129_lintendforum/question_entry.php";
+
     RequestQueue requestQueue;
     /*ListView list;
     HomeTabAdapter adapter;*/
@@ -99,7 +107,27 @@ public class HomeTabActivity extends Fragment {
 
         searchView = v.findViewById(R.id.searchview); // search view
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//spinner
+        refresh = v.findViewById(R.id.swipeRefresh);
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh.setRefreshing(true);
+                mydata.clear();
+                dataLoading();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+                        refresh.setRefreshing(false);
+                    }
+                }, 2000);
+
+            }
+        });
+
+
+
 
 
 
@@ -270,59 +298,15 @@ public class HomeTabActivity extends Fragment {
         recyclerView = view.findViewById(R.id.home_tab_recycleview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        /*answerCount();*/
 
-        requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONArray array1 = new JSONArray(response);
-
-                    for (int i = 0; i < array1.length(); i++) {
+      /*  LayoutAnimationController animationController =AnimationUtils.loadLayoutAnimation(getContext(),R.anim.layout_anim_fall_down);
+        recyclerView.setLayoutAnimation(animationController);*/
 
 
-                        JSONObject obj1 = array1.getJSONObject(i);
-                        DataModule m = new DataModule();
-                        m.setName(obj1.getString("name"));
-                        m.setQuestion(obj1.getString("question"));
-                        m.setTime(obj1.getString("date_time"));
-                        m.setId(obj1.getString("id"));
-                        mydata.add(m);
-
-                    }
-                   // Toast.makeText(getContext(), "Refreshed ", Toast.LENGTH_LONG).show();
+            dataLoading();
 
 
-
-                          recyclerView.setAdapter(new HomeTabAdapter(getContext(), mydata));
-
-
-
-                } catch (Exception e) {
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-             /* new AlertDialog.Builder(getActivity())
-                      .setIcon(android.R.drawable.ic_dialog_alert)
-                      .setTitle("NO INTERNET")
-                      .setMessage("Connect Please")
-                      .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-                          @Override
-                          public void onClick(DialogInterface dialog, int which) {
-                              getActivity().finish();
-                          }
-                      })
-                      .show();
-*/
-
-            }
-        });
-        requestQueue.add(stringRequest);
-        }
 
 
    /* @Override
@@ -338,7 +322,109 @@ public class HomeTabActivity extends Fragment {
         return super.onOptionsItemSelected(item);
     }*/
 
+  /*  public void answerCount(){
+        String answerCountUrl = "http://popularkoju.com.np/id1277129_lintendforum/answer_count.php";
+        requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, answerCountUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject obj1 = new JSONObject(response);
+
+                  //  if (obj1.names().get(0).equals("total_count")) {
+                        DataModule count = new DataModule();
+                        count.setAnswerCount(obj1.getString("total_count"));
+                        mydata.add(count);
+
+                        recyclerView.setAdapter(new HomeTabAdapter(getContext(), mydata));
 
 
 
-}
+                } catch (Exception e) {
+
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("question_id","141" );
+                return  map;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+*/
+    }
+
+  public void dataLoading(){
+            requestQueue = Volley.newRequestQueue(getContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    try {
+                        JSONArray array1 = new JSONArray(response);
+
+                        for (int i = 0; i < array1.length(); i++) {
+
+
+                            JSONObject obj1 = array1.getJSONObject(i);
+                            DataModule m = new DataModule();
+                            m.setName(obj1.getString("name"));
+                            m.setQuestion(obj1.getString("question"));
+                            m.setTime(obj1.getString("date_time"));
+                            m.setId(obj1.getString("id"));
+                            m.setImage(obj1.getString("images"));
+
+                            mydata.add(m);
+
+                        }
+                        // Toast.makeText(getContext(), "Refreshed ", Toast.LENGTH_LONG).show();
+
+
+
+                        recyclerView.setAdapter(new HomeTabAdapter(getContext(), mydata));
+
+
+
+                    } catch (Exception e) {
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+             /* new AlertDialog.Builder(getActivity())
+                      .setIcon(android.R.drawable.ic_dialog_alert)
+                      .setTitle("NO INTERNET")
+                      .setMessage("Connect Please")
+                      .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+                          @Override
+                          public void onClick(DialogInterface dialog, int which) {
+                              getActivity().finish();
+                          }
+                      })
+                      .show();
+*/
+
+                }
+            });
+            requestQueue.add(stringRequest);
+        }
+        }
+
+
+
+
+

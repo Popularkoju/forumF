@@ -21,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.lintend.forum.DataModule;
 import com.lintend.forum.R;
+import com.lintend.forum.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +32,9 @@ import java.util.Map;
 
 public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswerDisplayAdapter.MyViewHolder> {
     RequestQueue requestQueue;
+    SessionManager sm;
+
+    String ans_id;
     String url = "http://popularkoju.com.np/id1277129_lintendforum/voting_task.php";
     Context c;
      List<DataModule> list;
@@ -53,10 +57,13 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
         myViewHolder.time2.setText(list.get(i).getTime());
         myViewHolder.answer.setText(list.get(i).getAnswers());
         myViewHolder.counter.setText(list.get(i).getVote_count());
-        final String ans_id = list.get(i).getAnswer_id();
+       ans_id = list.get(i).getAnswer_id();
 
         String vi= list.get(i).getVote_count();
         final int[] count = {Integer.parseInt(vi)};
+        sm = new SessionManager(c);
+        HashMap<String, String> map = sm.getUserDetails();
+        final String userEmail = map.get(SessionManager.KEY_EMAIL);
 
 
 
@@ -68,6 +75,8 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
         myViewHolder.counter_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               final String ans_id_vote = list.get(i).getAnswer_id();
+               // Toast.makeText(c, ans_id, Toast.LENGTH_SHORT).show();
 
                 count[0]++;
                 myViewHolder.counter.setText(String.valueOf(count[0]));
@@ -82,7 +91,7 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
                         try {
                             JSONObject obj1 =  new JSONObject(response);
 
-                            if(obj1.names().get(0).equals("success")){
+                            if(obj1.names().get(1).equals("success")){
                                 Toast toast = new Toast(c);
                                 toast.setGravity(Gravity.CENTER, 0, -150);
                                 toast.setDuration(Toast.LENGTH_SHORT);
@@ -114,8 +123,9 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String> mymap = new HashMap<>();
-                        mymap.put("answer_id",ans_id);
+                        mymap.put("answer_id",ans_id_vote);
                         mymap.put("vote_count",vl);
+                        mymap.put("email", userEmail);
                         return  mymap;
                     }
                 };
@@ -148,7 +158,7 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
                             try {
                                 JSONObject obj1 =  new JSONObject(response);
 
-                                if(obj1.names().get(0).equals("success")){
+                                if(obj1.names().get(1).equals("success")){
                                     Toast toast = new Toast(c);
                                     toast.setGravity(Gravity.CENTER, 0, -150);
                                     toast.setDuration(Toast.LENGTH_SHORT);
@@ -183,6 +193,7 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
                             Map<String,String> mymap = new HashMap<>();
                             mymap.put("answer_id",ans_id);
                             mymap.put("vote_count",vld);
+                            mymap.put("email", userEmail);
                             return  mymap;
                         }
                     };
@@ -204,7 +215,7 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView username, time1, question;
+      //  TextView username, time1, question;
         TextView ans_username, time2, answer;
         CardView cardView;
         ImageView counter_up, counter_down; //counter

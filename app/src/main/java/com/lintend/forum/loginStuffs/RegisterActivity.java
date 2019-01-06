@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,7 +27,8 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText name, email , password;
-    Button register, login;
+    TextView login;
+    Button  register;
     String url = "http://popularkoju.com.np//id1277129_lintendforum/register.php";
     RequestQueue requestQueue;
     ProgressDialog dialog;
@@ -39,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         dialog.setMessage("Registering user ,please wait");
         dialog.setCancelable(false);
 
-        setContentView(R.layout.register_layout);
+        setContentView(R.layout.signup_layout);
         name =findViewById(R.id.Rname);
         email = findViewById(R.id.Remail);
         password=findViewById(R.id.Rpassword);
@@ -61,60 +63,71 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
-                requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-                StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject obj1 = new JSONObject(response);
-                            //   String status = obj1.names().get(0).equals("success");
+                if (name.getText().toString().trim().isEmpty()) {
+                    name.setError("Please fill all the forms");
+                } else if (email.getText().toString().trim().isEmpty()) {
+                    email.setError("Please fill all the forms");
 
-                            //boolean success=obj1.getBoolean("success");
-                            if (obj1.names().get(0).equals("success")) {
-                                //if(success){
-                                Toast.makeText(RegisterActivity.this, obj1.getString("success"), Toast.LENGTH_SHORT).show();
 
+                } else if ((password.getText().toString().trim().isEmpty())) {
+                    password.setError("Please fill all the forms");
+                } else {
+                    dialog.show();
+                    requestQueue = Volley.newRequestQueue(RegisterActivity.this);
+                    StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject obj1 = new JSONObject(response);
+                                //   String status = obj1.names().get(0).equals("success");
+
+                                //boolean success=obj1.getBoolean("success");
+                                if (obj1.names().get(0).equals("success")) {
+                                    //if(success){
+                                    Toast.makeText(RegisterActivity.this, obj1.getString("success"), Toast.LENGTH_SHORT).show();
+
+                                    dialog.dismiss();
+                                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(i);
+                                } else {
+                                    dialog.cancel();
+                                    Toast.makeText(RegisterActivity.this, "Registration failed. User Exist", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
                                 dialog.dismiss();
-//                                Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
-//                                startActivity(i);
-                            } else {
-                                dialog.cancel();
-                                Toast.makeText(RegisterActivity.this, "Registration failed. User Exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Exception Caught", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (Exception e) {
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
                             dialog.dismiss();
-                            Toast.makeText(RegisterActivity.this, "Exception Caught", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> myMap = new HashMap<>();
+                            myMap.put("username", name.getText().toString());
+                            myMap.put("email", email.getText().toString().trim());
+                            myMap.put("password", password.getText().toString().trim());
+                            return myMap;
+
                         }
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> myMap = new HashMap<>();
-                        myMap.put("username", name.getText().toString());
-                        myMap.put("email", email.getText().toString().trim());
-                        myMap.put("password", password.getText().toString().trim());
-                        return myMap;
+                    };
 
-                    }
+                    requestQueue.add(sr);
+                }
 
-
-                };
-
-                requestQueue.add(sr);
             }
-
-
 
         });
     }
+
 }
+
 

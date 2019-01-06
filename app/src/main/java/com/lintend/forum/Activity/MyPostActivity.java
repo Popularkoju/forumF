@@ -107,14 +107,14 @@ public class MyPostActivity extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
+               //     Toast.makeText(c, "Exception Caught", Toast.LENGTH_SHORT).show();
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(c, "No internet", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(c, "No internet", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

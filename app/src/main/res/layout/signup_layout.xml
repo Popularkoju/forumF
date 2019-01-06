@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/login_signup_bacground">
+    <RelativeLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:paddingBottom="10dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="16dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:src="@drawable/web_hi_res_512"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="70dp">
+                <EditText
+                    android:id="@+id/Rname"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="53dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="3dp"
+                    android:drawableLeft="@drawable/ic_account_user"
+                    android:drawablePadding="15dp"
+                    android:paddingLeft="15dp"
+                    android:hint="Full Name"
+                    android:background="@drawable/login_stuff_edit_text_background"/>
+
+
+                <EditText
+                    android:id="@+id/Remail"
+                    android:layout_below="@+id/Rname"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginRight="3dp"
+                    android:drawableLeft="@drawable/ic_account_email"
+                    android:drawablePadding="15dp"
+                    android:paddingLeft="15dp"
+                    android:hint="Email"
+                    android:background="@drawable/login_stuff_edit_text_background"/>
+        <!--    <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInput_p"
+                android:layout_below="@id/Remail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                >
+            </android.support.design.widget.TextInputLayout>-->
+
+
+            <EditText
+                android:id="@+id/Rpassword"
+                android:layout_below="@+id/Remail"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginRight="3dp"
+                android:drawableLeft="@drawable/ic_account_password"
+                android:drawablePadding="15dp"
+                android:paddingLeft="15dp"
+
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@drawable/login_stuff_edit_text_background"/>
+
+
+                <TextView
+                    android:layout_below="@+id/Rpassword"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/txtForgetPw"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+
+                    />
+
+                <Button
+                    android:id="@+id/Rbtnsignup"
+                    android:layout_below="@+id/txtForgetPw"
+                    android:layout_width="250dp"
+                    android:layout_height="50dp"
+                    android:text="Sign up"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:layout_marginStart="43dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="#FFF"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textAllCaps="false"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginRight="30dp" />
+
+                <TextView
+            android:id="@+id/txtmember"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/Rbtnsignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="70dp"
+            android:text="Already a member ?"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:id="@+id/Rbtnlogin"
+
+            android:layout_toRightOf="@+id/txtmember"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/Rbtnsignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+
+            android:textColor="@color/colorAccent"
+            android:text="Sign in"/>
+            </RelativeLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lintend.forum.Activity.QuestionAnswerDisplay;
 import com.lintend.forum.DataModule;
 import com.lintend.forum.R;
@@ -46,15 +50,19 @@ import java.util.Map;
 public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHolder> {
 
     String like = "1234";
+    String id;
     RequestQueue requestQueue;
     ProgressDialog progressDialog;
     String url = "http://popularkoju.com.np/id1277129_lintendforum/answer_entry.php";
+
 
     Calendar calendar= Calendar.getInstance();
     SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm a");
     String strtime =  mdformat.format(calendar.getTime());
     String currentdate = DateFormat.getDateInstance( DateFormat.MEDIUM).format(calendar.getTime());
     String currrentdateTime = currentdate + " "+"at" +" " + strtime;
+
+    String count;
 
 
     SessionManager sm;
@@ -79,6 +87,7 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
         LayoutInflater inflater = LayoutInflater.from(c);
         View v = inflater.inflate(R.layout.home_tab_list_item, null);
         MyViewHolder myViewHolder = new MyViewHolder(v);
+
         return myViewHolder;
 
 
@@ -91,12 +100,25 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
     public void onBindViewHolder(@NonNull final HomeTabAdapter.MyViewHolder myViewHolder, int i) {
        final DataModule dm = mydata.get(i);
 
+
         myViewHolder.like_count.setText(like);
 
         myViewHolder.name.setText(mydata.get(i).getName());
         myViewHolder.time.setText(mydata.get(i).getTime());
         myViewHolder.question.setText(mydata.get(i).getQuestion());
-        final String id = mydata.get(i).getId();
+        String imgUrl =  "http://popularkoju.com.np/id1277129_lintendforum/";
+        Glide.with(c)
+                .load(imgUrl + mydata.get(i).getImage())
+                .apply(RequestOptions.circleCropTransform())
+                    .into(myViewHolder.userImage);
+
+         id = mydata.get(i).getId();
+       // myViewHolder.answer_count.setText(mydata.get(i).getAnswerCount());
+
+
+
+
+
 
 
 
@@ -200,11 +222,12 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                id = mydata.get(myViewHolder.getAdapterPosition()).getId();
+
                 Intent i = new Intent(c, QuestionAnswerDisplay.class);
-               /* i.putExtra("username",dm.getName());
-                i.putExtra("time", dm.getTime());
-                i.putExtra("question",dm.getQuestion());*/
+
                 i.putExtra("id",id);
+              //  Toast.makeText(c, id, Toast.LENGTH_SHORT).show();
                 c.startActivity(i);
 
 
@@ -254,9 +277,11 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView  name, question, time;
-        TextView like, answer;
+        TextView  answer, answer_count;
         TextView like_count;
+        ImageView userImage;
         CardView cardView;
+        SwipeRefreshLayout refresh;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.username);
@@ -265,9 +290,15 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
             answer = itemView.findViewById(R.id.btncomment);
             cardView = itemView.findViewById(R.id.cardView);
             like_count = itemView.findViewById(R.id.like_counter);
+            answer_count = itemView.findViewById(R.id.ans_counter);
+
+            refresh=itemView.findViewById(R.id.swipeRefresh);
+
+            userImage = itemView.findViewById(R.id.userImageInQuestion);
         }
 
         }
+
 
 
 
