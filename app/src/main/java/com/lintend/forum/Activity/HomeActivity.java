@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+//import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.lintend.forum.R;
 import com.lintend.forum.SessionManager;
 

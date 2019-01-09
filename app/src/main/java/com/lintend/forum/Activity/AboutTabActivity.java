@@ -74,9 +74,9 @@ public class AboutTabActivity extends Fragment {
     ProgressDialog dialog;
     Bitmap bitmap; // image
 
+    ProgressDialog progressDialog;
+
     AlertDialog dialogs,alertDialog; // update profile and change password alert dialogs
-
-
 
     String url = "http://popularkoju.com.np/id1277129_lintendforum/account_details.php";
     String  imageUploadUrl= "http://popularkoju.com.np/id1277129_lintendforum/images_upload.php";
@@ -90,6 +90,8 @@ public class AboutTabActivity extends Fragment {
     TextView name, accountContact;
     TextView email;
 
+
+
     Context applicationContext = HomeActivity.getContextOfAppliction(); // called from mainActivity
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -97,8 +99,6 @@ public class AboutTabActivity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.about_profile_layout, null);
-
-
 
         logout = v.findViewById(R.id.logout);
         name = v.findViewById(R.id.accountName);
@@ -118,6 +118,9 @@ public class AboutTabActivity extends Fragment {
 
         email.setText(userEmail);
 
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Please wait ... ");
+
 
 
 
@@ -136,7 +139,7 @@ public class AboutTabActivity extends Fragment {
         });
 
 
-        //image upload  --------------------------------------------------------------------------------
+        //image upload  --------------------------------IMAGE UPLOAD ------------------------------------------------
         btnuploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,7 +218,10 @@ public class AboutTabActivity extends Fragment {
                                  contactUpdate = v.findViewById(R.id.update_contact);
 
                                  nameUpdate.setText(name.getText().toString());
+                                 nameUpdate.setSelection(nameUpdate.getText().length());
+
                                  contactUpdate.setText(accountContact.getText().toString());
+                                 contactUpdate.setSelection(contactUpdate.getText().length());
                                 Button update = v.findViewById(R.id.btnUpdate_profile);
 
                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -229,6 +235,7 @@ public class AboutTabActivity extends Fragment {
                                             if(nameUpdate.getText().toString().isEmpty()){
                                                 nameUpdate.setError("Name Cannot be empty");
                                             }else {
+
         /*update profile method called */    updateProfile();
                                             }
                                             }
@@ -463,6 +470,7 @@ public class AboutTabActivity extends Fragment {
             sm = new SessionManager(getActivity());
             HashMap<String, String> map = sm.getUserDetails();
             final String userEmail = map.get(SessionManager.KEY_EMAIL);
+            progressDialog.show();
 
          requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, editProfileURL, new Response.Listener<String>() {
@@ -472,15 +480,19 @@ public class AboutTabActivity extends Fragment {
                     JSONObject obj = new JSONObject(response);
                     if(obj.names().get(0).equals("success")){
                         Toast.makeText(getContext(), "Data Updated", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                         alertDialog.dismiss();
 
+
                     }else{
+                        progressDialog.dismiss();
                         alertDialog.dismiss();
                         Toast.makeText(getContext(), "Update failed", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressDialog.dismiss();
                     alertDialog.dismiss();
                     Toast.makeText(getContext(), "exception caught", Toast.LENGTH_SHORT).show();
                 }
@@ -489,6 +501,7 @@ public class AboutTabActivity extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 Toast.makeText(getContext(), "No internet", Toast.LENGTH_SHORT).show();
 
             }
@@ -504,9 +517,6 @@ public class AboutTabActivity extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
-
-
-
         }
 
         /* ---------------------------------------------CHANGE PASSWORD----------------------------------------*/
@@ -514,6 +524,7 @@ public class AboutTabActivity extends Fragment {
             sm = new SessionManager(getActivity());
             HashMap<String, String> map = sm.getUserDetails();
             final String userEmail = map.get(SessionManager.KEY_EMAIL);
+            progressDialog.show();
 
             requestQueue = Volley.newRequestQueue(getContext());
             StringRequest stringRequest = new StringRequest(Request.Method.POST, changePasswordURL, new Response.Listener<String>() {
@@ -522,17 +533,19 @@ public class AboutTabActivity extends Fragment {
                     try {
                         JSONObject obj = new JSONObject(response);
                         if(obj.names().get(0).equals("success")){
+                            progressDialog.dismiss();
                             dialogs.dismiss();
                             Toast.makeText(getContext(), "Password Changed Successfully", Toast.LENGTH_SHORT).show();
 
-
                         }else{
+                            progressDialog.dismiss();
                             dialogs.dismiss();
                             Toast.makeText(getContext(), "Failed, Check your old password", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        progressDialog.dismiss();
                         dialogs.dismiss();
                         Toast.makeText(getContext(), "exception caught", Toast.LENGTH_SHORT).show();
                     }
@@ -541,6 +554,7 @@ public class AboutTabActivity extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
                     Toast.makeText(getContext(), "No internet", Toast.LENGTH_SHORT).show();
 
                 }
@@ -556,15 +570,9 @@ public class AboutTabActivity extends Fragment {
                 }
             };
             requestQueue.add(stringRequest);
+            }
 
-
-
-
-
-        }
-
-
-    }
+}
 
 
 

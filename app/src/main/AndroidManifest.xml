@@ -3,10 +3,8 @@
     package="com.lintend.forum">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    />
 
     <application
         android:allowBackup="true"
@@ -21,7 +19,12 @@
         <activity
             android:name=".loginStuffs.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".loginStuffs.RegisterActivity" />
+        <activity
+            android:name=".loginStuffs.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".loginStuffs.RegisterActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.SplashScreenActivity"
             android:screenOrientation="portrait">
@@ -34,9 +37,11 @@
         <activity
             android:name=".Activity.QuestionAnswerDisplay"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.MyPostAnswerDisplayActivity"></activity>
+        <activity android:name=".Activity.MyPostAnswerDisplayActivity" />
 
-        <service android:name=".service.MyService" />
+        <service android:name=".service.MySevice" />
+
+        <activity android:name=".Activity.Report"></activity>
     </application>
 
 </manifest>

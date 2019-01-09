@@ -40,8 +40,10 @@
                 android:layout_toRightOf="@id/userImageInQuestion"
                 android:text="popular"
                 android:layout_marginLeft="4dp"
-                android:textSize="20dp"
-                android:fontFamily="sans-serif"
+                android:layout_marginTop="2dp"
+
+                android:textSize="15sp"
+
                 />
             <TextView
                 android:id="@+id/time"
@@ -51,7 +53,8 @@
                 android:text="8:00pm"
                 android:textSize="10sp"
                 android:layout_marginLeft="4dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_below="@+id/username"/>
 
             <ImageView
@@ -68,13 +71,14 @@
                 android:layout_below="@+id/time"
                 android:id="@+id/questionTitle"
                android:padding="5dp"
-                android:fontFamily="casual"
+
                  android:text="What is your name?"
-                android:textSize="14sp"
+                android:textSize="17sp"
                 android:layout_marginTop="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
+                android:minHeight="60dp"
+                android:textStyle="bold"
                 android:layout_marginBottom="5dp"/>
             <View style="@style/Divider"
                 android:id="@+id/view"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="3dp"
     android:layout_marginRight="3dp"
-    android:layout_marginTop="30dp">
+    android:layout_marginTop="20dp">
 
 
         <RelativeLayout
@@ -19,17 +19,13 @@
         android:id="@+id/questionTxt"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-      style= "@drawable/custom_toast_border"
         android:text="Question"
-
-
         android:textSize="20dp"/>
             <View style="@style/Divider"
                 android:id="@+id/view"
-
-                android:layout_height="2dp"
-                android:background="@color/white"
+                android:layout_height="0.5dp"
                 android:layout_below="@id/questionTxt"
+                android:layout_marginBottom="4dp"
                 />
           <!--  <TextView
                 android:id="@+id/category"
@@ -56,10 +52,11 @@
         android:id="@+id/questionType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:height="200dp"
+        android:minHeight="170dp"
         android:gravity="top"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/login_stuff_edit_text_background"
         android:hint="Enter your question here "
+        android:padding="6dp"
 
         />
 

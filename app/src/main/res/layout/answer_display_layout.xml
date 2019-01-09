@@ -9,6 +9,7 @@
     android:paddingLeft="6dp"
     android:paddingRight="6dp"
     android:paddingTop="1dp"
+    android:layout_margin="3dp"
 
     >
 
@@ -23,7 +24,8 @@
         app:cardElevation="0dp"
         app:cardMaxElevation="15dp"
         app:contentPaddingLeft="10dp"
-        app:contentPaddingRight="10dp">
+        app:contentPaddingRight="10dp"
+        android:layout_margin="3dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -49,17 +51,20 @@
                 android:layout_marginTop="0dp"
                 android:text="8:00pm"
                 android:textSize="10sp" />
-            <TextView android:id="@+id/report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <Button android:id="@+id/report"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
                 android:layout_toRightOf="@+id/username_answer"
                 android:text="Report"
-                android:layout_alignParentRight="true"
-                android:gravity="right"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="25dp"
-                android:textSize="10dp"
-                android:fontFamily="casual"
+               android:layout_marginLeft="150dp"
+                android:gravity="center"
+
+
+                android:layout_marginRight="10dp"
+                android:textSize="7dp"
+                android:layout_marginBottom="7dp"
+                android:textAllCaps="false"
+
                 />
 
             <View

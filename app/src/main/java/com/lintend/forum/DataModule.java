@@ -2,6 +2,7 @@ package com.lintend.forum;
 
  public class DataModule {
 
+
      String name;
      String Question;
      String Time;
@@ -10,6 +11,18 @@ package com.lintend.forum;
 
      String vote_count;
      String answer_id;
+
+     String toAdapter_qid;
+
+     public String getToAdapter_qid() {
+         return toAdapter_qid;
+     }
+
+     public void setToAdapter_qid(String toAdapter_qid) {
+         this.toAdapter_qid = toAdapter_qid;
+     }
+
+
 
      public String getAnswerCount() {
          return AnswerCount;

@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText email, password;
     Button login;
-    TextView signup;
+    TextView signup, forgetPassword;
     RequestQueue requestQueue;
     String url ="http://popularkoju.com.np//id1277129_lintendforum/login.php";
     ProgressDialog dialog ;
@@ -47,12 +47,15 @@ public class LoginActivity extends AppCompatActivity {
         password =findViewById(R.id.password);
         login = findViewById(R.id.btnlogin);
         signup=findViewById(R.id.btnsignup);
+        forgetPassword = findViewById(R.id.txtForgetPw);
+
 
         dialog= new ProgressDialog(this);
-        dialog.setMessage("Please wait. Loging in");
+        dialog.setMessage("Please wait. Logging in");
+
+
+
         requestQueue = Volley.newRequestQueue(this);
-
-
         sessionManager = new SessionManager(LoginActivity.this);
         if(sessionManager.isLoggedIn()){
             startActivity(new Intent(this,HomeActivity.class));
@@ -67,6 +70,17 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
+
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                startActivity(i);
+
+            }
+        });
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject obj1 = new JSONObject(response);
 
                                 String emailE = email.getText().toString();
-
-
                                 if (obj1.names().get(0).equals("success")) {
                                     dialog.dismiss();
                                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
@@ -125,8 +137,8 @@ public class LoginActivity extends AppCompatActivity {
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> mymap = new HashMap<>();
 
-                            mymap.put("email", email.getText().toString());
-                            mymap.put("password", password.getText().toString());
+                            mymap.put("email", email.getText().toString().trim());
+                            mymap.put("password", password.getText().toString().trim());
                             return mymap;
                         }
                     };

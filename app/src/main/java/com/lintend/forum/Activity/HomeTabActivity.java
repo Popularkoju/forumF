@@ -258,7 +258,7 @@ public class HomeTabActivity extends Fragment {
                                     @Override
                                     protected Map<String, String> getParams() throws AuthFailureError {
                                         Map<String, String> myMap = new HashMap<>();
-                                        myMap.put("question_title", question.getText().toString());
+                                        myMap.put("question_title", question.getText().toString().trim());
                                         myMap.put("email", map.get(sessionManager.KEY_EMAIL));
                                         myMap.put("date_time", currrentdateTime);
                                         return myMap;

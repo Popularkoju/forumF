@@ -35,11 +35,14 @@
         <EditText
             android:id="@+id/enteranswer"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/aTanswer"
-            android:height="200dp"
-            android:backgroundTint="@color/white"
-            android:gravity="top"
+            android:minHeight="170dp"
+            android:layout_centerHorizontal="true"
+           android:background="@drawable/login_stuff_edit_text_background"
+           android:gravity="top"
+            android:padding="6dp"
+            android:layout_marginTop="6dp"
             android:hint="Enter Your answer here" />
 
             <Button

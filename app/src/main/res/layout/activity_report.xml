@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Report">
+    tools:context=".Activity.Report"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Report this answer"
+        android:textSize="17sp"
+       android:gravity="center_horizontal"
+        android:layout_marginTop="16dp"/>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:id="@+id/radioGroup">
+        <RadioButton android:id="@+id/option_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option_one"
+            android:onClick="onRadioButtonClicked"
+            android:checked="true"/>
+        <RadioButton android:id="@+id/option_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option_two"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/option_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option_three"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/option_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option_four"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/option_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option_five"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/option_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option_six"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Report this answer"
+        android:textSize="12sp"
+
+        android:layout_margin="16dp"/>
+    <EditText
+        android:id="@+id/edt_report"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:textSize="12sp"
+        android:visibility="gone"
+       android:layout_marginLeft="16dp"
+        android:padding="5dp"
+        android:layout_gravity="start"
+        android:gravity="start"
+
+        android:background="@drawable/login_stuff_edit_text_background"/>
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="report"
+        android:backgroundTint="@color/colorAccent"
+        android:textColor="#FFF"
+        android:layout_gravity="right"
+        android:layout_margin="32dp"
+        android:id="@+id/btnReport"/>
+
+
+
+</LinearLayout>
+</ScrollView>

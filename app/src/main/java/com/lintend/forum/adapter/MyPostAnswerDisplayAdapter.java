@@ -57,7 +57,7 @@ public class MyPostAnswerDisplayAdapter extends RecyclerView.Adapter<MyPostAnswe
         myViewHolder.time2.setText(list.get(i).getTime());
         myViewHolder.answer.setText(list.get(i).getAnswers());
         myViewHolder.counter.setText(list.get(i).getVote_count());
-       ans_id = list.get(i).getAnswer_id();
+         ans_id = list.get(i).getAnswer_id();
 
         String vi= list.get(i).getVote_count();
         final int[] count = {Integer.parseInt(vi)};

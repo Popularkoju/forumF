@@ -1,6 +1,7 @@
 package com.lintend.forum.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -18,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.lintend.forum.Activity.QuestionAnswerDisplay;
+import com.lintend.forum.Activity.Report;
 import com.lintend.forum.DataModule;
 import com.lintend.forum.R;
 import com.lintend.forum.SessionManager;
@@ -33,8 +36,11 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
 
     RequestQueue requestQueue;
     String url = "http://popularkoju.com.np/id1277129_lintendforum/voting_task.php";
+   // String reportURL = "http://popularkoju.com.np/id1277129_lintendforum/report.php";
         SessionManager sm;
 
+
+    String ans_id, answer_ids;
 
 
 
@@ -63,13 +69,30 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
         myViewHolder.time2.setText(list.get(i).getTime());
         myViewHolder.answer.setText(list.get(i).getAnswers());
         myViewHolder.counter.setText(list.get(i).getVote_count());
-        final String ans_id = list.get(i).getAnswer_id();
+          ans_id = list.get(i).getAnswer_id();
+
+
+
 
         String vi= list.get(i).getVote_count();
         final int[] count = {Integer.parseInt(vi)};
         sm = new SessionManager(c);
         HashMap<String, String> map = sm.getUserDetails();
         final String userEmail = map.get(SessionManager.KEY_EMAIL);
+
+
+        myViewHolder.report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer_ids = list.get(i).getAnswer_id();
+                String from_adapter =list.get(i).getToAdapter_qid(); // question answer form  adapter
+                //Toast.makeText(c, answer_ids, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(c, Report.class);
+                i.putExtra("answer_id",answer_ids);
+               i.putExtra("question_id", from_adapter);
+                c.startActivity(i);
+            }
+        });
 
 
 
@@ -220,15 +243,19 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
 
  /**********************************************************************************finish ****************************************/
 
+
     @Override
     public int getItemCount() {
         return list.size();
     }
 
 
+
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView username, time1, question;
-        TextView ans_username, time2, answer;
+        TextView ans_username, time2, answer, report;
 
         ImageView counter_up, counter_down; //counter
         TextView counter;
@@ -245,6 +272,7 @@ public class QuestionAnswerActivityAdapter extends RecyclerView.Adapter<Question
             ans_username = itemView.findViewById(R.id.username_answer);
             time2=itemView.findViewById(R.id.time_answer);
             answer=itemView.findViewById(R.id.answerT);
+            report = itemView.findViewById(R.id.report);
 
             //counter
             counter= itemView.findViewById(R.id.counter);

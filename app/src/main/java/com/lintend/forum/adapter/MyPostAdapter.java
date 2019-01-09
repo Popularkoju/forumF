@@ -101,7 +101,9 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyViewHold
                  final EditText question = vi.findViewById(R.id.questionType);
 
                 original = m.get(myViewHolder.getAdapterPosition()).getQuestion();
+
                 question.setText(original);
+                question.setSelection(question.getText().length());
                // final String update = question.getText().toString().trim();
                 progressDialog = new ProgressDialog(c);
                 progressDialog.setMessage("Please Wait, Updating your question..");

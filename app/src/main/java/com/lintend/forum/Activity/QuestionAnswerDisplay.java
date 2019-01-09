@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class QuestionAnswerDisplay extends AppCompatActivity {
 
-    TextView uname, time1, question1; // question
+   // TextView uname, time1, question1; // question
 
 
 
@@ -80,8 +80,8 @@ public class QuestionAnswerDisplay extends AppCompatActivity {
 
 
       //  sm = new SessionManager(this);
-        id= getIntent().getStringExtra("id");
-        idd= getIntent().getStringExtra("id");
+        id= getIntent().getStringExtra("id"); // question id
+        idd= getIntent().getStringExtra("id"); // question id
 
         progressDialog = new ProgressDialog(QuestionAnswerDisplay.this);
         progressDialog.setMessage("Please Wait, Posting your answer");
@@ -176,6 +176,8 @@ public class QuestionAnswerDisplay extends AppCompatActivity {
                         m.setAnswers(obj1.getString("answer"));
                         m.setVote_count(obj1.getString("vote"));
                         m.setAnswer_id(obj1.getString("answer_id"));
+
+                        m.setToAdapter_qid(idd); // question id from intent
                         mydata.add(m);
 
 

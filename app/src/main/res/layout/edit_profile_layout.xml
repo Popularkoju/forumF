@@ -35,6 +35,7 @@
         android:drawablePadding="15dp"
         android:paddingLeft="15dp"
         android:hint="Contact number"
+        android:inputType="number"
         android:background="@drawable/login_stuff_edit_text_background"/>
 
     <Button

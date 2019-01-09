@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">lintendforum</string>
+
+
+    <string name="option_one"> this is option one </string>
+    <string name="option_two">this is option two</string>
+    <string name="option_three">this is option three</string>
+    <string name="option_four">this is option four</string>
+    <string name="option_five">this is option five</string>
+    <string name="option_six">other</string>
+
+
 </resources>
