@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -63,6 +64,7 @@ public class MyPostActivity extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final TextView nopost = view.findViewById(R.id.nopost);
         recyclerView= view.findViewById(R.id.post_tab_recycleview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -88,6 +90,7 @@ public class MyPostActivity extends Fragment {
                             m.setQuestion(obj1.getString("question"));
                             m.setTime(obj1.getString("date_time"));
                             m.setPost_qid(obj1.getString("id"));
+                            m.setQ_category(obj1.getString("category"));
                             mydata.add(m);
                     }
 
@@ -97,12 +100,14 @@ public class MyPostActivity extends Fragment {
                     if (!mydata.isEmpty())
                     recyclerView.setAdapter(new MyPostAdapter(getActivity(), mydata));
                     else {
-                        new AlertDialog.Builder(getActivity())
+                            nopost.setText("No posts");
+                        /*new AlertDialog.Builder(getActivity())
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .setTitle("NO POST")
                                 .setMessage(" Please POST")
                                 .setPositiveButton("Dismiss", null)
-                                .show();
+                                .show();*/
+
                     }
 
                 } catch (JSONException e) {

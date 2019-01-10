@@ -14,6 +14,16 @@ package com.lintend.forum;
 
      String toAdapter_qid;
 
+     public String getQ_category() {
+         return q_category;
+     }
+
+     public void setQ_category(String q_category) {
+         this.q_category = q_category;
+     }
+
+     String q_category;
+
      public String getToAdapter_qid() {
          return toAdapter_qid;
      }

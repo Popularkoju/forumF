@@ -72,6 +72,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyViewHold
         myViewHolder.uname.setText(m.get(i).getName());
         myViewHolder.questionAsked.setText(m.get(i).getQuestion());
         myViewHolder.time.setText(m.get(i).getTime());
+        myViewHolder.category.setText(m.get(i).getQ_category());
+
        // myViewHolder.qid.setText(m.get(i).getPost_qid());
          // id of relative question
         myViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +97,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyViewHold
         myViewHolder.btnedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View vi = LayoutInflater.from(c).inflate(R.layout.post_tab_layout, null);
+                View vi = LayoutInflater.from(c).inflate(R.layout.update_post_tab_layout, null);
 
                 Button post = vi.findViewById(R.id.btnpost);
                  final EditText question = vi.findViewById(R.id.questionType);
@@ -262,7 +264,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
         Button btnedit, btndelete ;
         CardView cardView;
-        TextView uname,  time , questionAsked, qid;
+        TextView uname,  time ,category,questionAsked, qid;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.time);
@@ -270,6 +272,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyViewHold
                 btndelete=itemView.findViewById(R.id.btnDelete);
             uname = itemView.findViewById(R.id.myPostusername);
             questionAsked = itemView.findViewById(R.id.questionT);
+
+            category = itemView.findViewById(R.id.category_post);
            // qid=itemView.findViewById(R.id.qid);
             cardView = itemView.findViewById(R.id.cardView_post);
         }

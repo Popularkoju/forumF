@@ -115,6 +115,10 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
          id = mydata.get(i).getId();
        // myViewHolder.answer_count.setText(mydata.get(i).getAnswerCount());
 
+        myViewHolder.category.setText(mydata.get(i).getQ_category());
+
+
+
 
 
 
@@ -278,7 +282,7 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView  name, question, time;
         TextView  answer, answer_count;
-        TextView like_count;
+        TextView like_count, category;
         ImageView userImage;
         CardView cardView;
         SwipeRefreshLayout refresh;
@@ -295,6 +299,8 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
             refresh=itemView.findViewById(R.id.swipeRefresh);
 
             userImage = itemView.findViewById(R.id.userImageInQuestion);
+            category = itemView.findViewById(R.id.category);
+
         }
 
         }

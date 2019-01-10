@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -188,11 +189,24 @@ public class HomeTabActivity extends Fragment {
 
                 final Button post = vi.findViewById(R.id.btnpost);
                 final EditText question = vi.findViewById(R.id.questionType);
+                final Spinner spinner = vi.findViewById(R.id.spinner);
+
+
 
                 progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Please Wait, Posting your question");
                 final SessionManager sessionManager = new SessionManager(getActivity());
                 final HashMap<String, String> map = sessionManager.getUserDetails();
+
+
+                final String[] category = {"Science","Account","Buy and sell"," Father","Mother","Sister","Sandesh", "Computer Science", "Politics", "Histroy", "Travel and Tourism"};
+                ArrayAdapter<String> adpa = new ArrayAdapter<String>(getContext(),
+                        R.layout.support_simple_spinner_dropdown_item,
+                        category);
+                spinner.setAdapter(adpa);
+
+
+
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                 alert.setView(vi);
@@ -200,11 +214,35 @@ public class HomeTabActivity extends Fragment {
                 dialog.show();
 
 
+              /*  spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        switch(position){
+                            case 0:
+
+                                break;
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });*/
+
+
 
                     post.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
+                            final String selectedCategory = spinner.getSelectedItem().toString();
+
+
+                            Toast.makeText(getContext(), selectedCategory, Toast.LENGTH_SHORT).show();
                             if (question.getText().toString().trim().isEmpty()) {
                                 question.setError("Question field cannot be empty ");
                             } else {
@@ -261,6 +299,7 @@ public class HomeTabActivity extends Fragment {
                                         myMap.put("question_title", question.getText().toString().trim());
                                         myMap.put("email", map.get(sessionManager.KEY_EMAIL));
                                         myMap.put("date_time", currrentdateTime);
+                                        myMap.put("category", selectedCategory);
                                         return myMap;
 
                                     }
@@ -386,6 +425,7 @@ public class HomeTabActivity extends Fragment {
                             m.setTime(obj1.getString("date_time"));
                             m.setId(obj1.getString("id"));
                             m.setImage(obj1.getString("images"));
+                            m.setQ_category(obj1.getString("category"));
 
                             mydata.add(m);
 

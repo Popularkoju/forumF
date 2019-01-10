@@ -41,6 +41,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.lintend.forum.DataModule;
 import com.lintend.forum.R;
@@ -87,7 +88,7 @@ public class AboutTabActivity extends Fragment {
     Button logout;
     ImageView btnchooseImage, btnuploadImage;
     ImageView userImage, moreOptions;
-    TextView name, accountContact;
+    TextView name, accountContact, questionCount, answerCount;
     TextView email;
 
 
@@ -109,6 +110,9 @@ public class AboutTabActivity extends Fragment {
 
         moreOptions = v.findViewById(R.id.moreOption);
         accountContact=v.findViewById(R.id.accountPhone);
+
+        questionCount =v.findViewById(R.id.questionCOunt);
+        answerCount=v.findViewById(R.id.answerCount);
 
       //  message = v.findViewById(R.id.messageHere);
 
@@ -299,6 +303,8 @@ public class AboutTabActivity extends Fragment {
         });
         userImage();
 
+        /* ----------------------------------------------- USER DATA FETCHING */
+
         requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
         StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -309,6 +315,13 @@ public class AboutTabActivity extends Fragment {
                     name.setText(account_name);
                     String account_contact = obj1.getString("contact");
                     accountContact.setText(account_contact);
+
+
+                    String answer_count = obj1.getString("ans_count");
+                    answerCount.setText(answer_count);
+
+                    String question_count = obj1.getString("question_count");
+                    questionCount.setText(question_count);
 
                 /*    String images = (obj1.getString("image"));
                     String  imgURL = "http://popularkoju.com.np/id1277129_lintendforum/";
@@ -401,9 +414,7 @@ public class AboutTabActivity extends Fragment {
             }*/
         if(requestCode == INT_CONST_CAM && resultCode==RESULT_OK && data!=null && data.getData()!=null ){
             dataUri= data.getData(); // data here is from Intent data above(parameter)
-
-
-           /* try {
+            /* try {
                 InputStream inputStream = applicationContext.getContentResolver().openInputStream(dataUri);
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 userImage.setImageBitmap(bitmap);
@@ -436,8 +447,12 @@ public class AboutTabActivity extends Fragment {
                         JSONObject obj1 = new JSONObject(response);
                         String images = (obj1.getString("image"));
                         String  imgURL = "http://popularkoju.com.np/id1277129_lintendforum/";
+                        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE)
+                                                                             .skipMemoryCache(true);
+
                         Glide.with(getContext())
                             .load(imgURL+images)
+                                .apply(requestOptions)
                             .apply(RequestOptions.circleCropTransform())
                             .into(userImage);
 

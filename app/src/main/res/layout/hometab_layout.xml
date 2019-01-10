@@ -7,11 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
+
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+   <!-- <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/topbar"
         android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
@@ -19,6 +26,8 @@
         android:layout_height="50dp"
         android:background="@color/colorAccent"
        >
+
+
         <RelativeLayout
 
             android:layout_width="match_parent"
@@ -66,6 +75,7 @@
 
 
 
+
     <android.support.v7.widget.RecyclerView
 
         android:layout_below="@+id/topbar"
@@ -93,5 +103,7 @@
         android:layout_marginBottom="25dp"
         android:src="@drawable/ic_add_answer" />
 
+
 </RelativeLayout>
+
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -25,8 +25,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
-                    android:text=" Ask question"
-                    android:textSize="20dp"
+                    android:text=" Update question"
+                    android:textSize="20sp"
                     android:textColor="#fff"/>
 
             </android.support.v7.widget.Toolbar>
@@ -56,9 +56,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@+id/category"
                 android:layout_marginTop="0dp"
-               android:backgroundTint="@color/grey"
-
-
+                android:layout_marginRight="16dp"
                 android:layout_centerHorizontal="true"
 
                 >
