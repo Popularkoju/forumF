@@ -11,10 +11,13 @@
     android:paddingLeft="6dp"
     android:paddingRight="6dp"
     android:paddingTop="16dp"
+
+
     >
-
-
-
+ <!--   <android.support.v4.widget.NestedScrollView
+        android:id="@+id/textScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
@@ -120,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_like"
-                    android:text="365"
+                    android:text="0"
                     android:textSize="15sp"
                     android:drawablePadding="7dp"
                     android:layout_weight="1"
@@ -130,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_answer"
-                    android:text="365"
+                    android:text=""
                     android:textSize="15sp"
                     android:drawablePadding="7dp"
                     android:layout_weight="1"/>
@@ -162,6 +165,7 @@
 
 
     </android.support.v7.widget.CardView>
+    <!--</android.support.v4.widget.NestedScrollView>-->
 
 
 

@@ -49,7 +49,7 @@ import java.util.Map;
 
 public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHolder> {
 
-    String like = "1234";
+
     String id;
     RequestQueue requestQueue;
     ProgressDialog progressDialog;
@@ -101,7 +101,7 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
        final DataModule dm = mydata.get(i);
 
 
-        myViewHolder.like_count.setText(like);
+
 
         myViewHolder.name.setText(mydata.get(i).getName());
         myViewHolder.time.setText(mydata.get(i).getTime());
@@ -116,17 +116,8 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
        // myViewHolder.answer_count.setText(mydata.get(i).getAnswerCount());
 
         myViewHolder.category.setText(mydata.get(i).getQ_category());
-
-
-
-
-
-
-
-
-
-
-
+        myViewHolder.answer_count.setText(mydata.get(i).getAnswerCount());
+        myViewHolder.vote.setText(mydata.get(i).getVote_count());
 
 
 
@@ -282,7 +273,7 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView  name, question, time;
         TextView  answer, answer_count;
-        TextView like_count, category;
+        TextView vote, category;
         ImageView userImage;
         CardView cardView;
         SwipeRefreshLayout refresh;
@@ -293,7 +284,7 @@ public class HomeTabAdapter extends RecyclerView.Adapter<HomeTabAdapter.MyViewHo
             question = itemView.findViewById(R.id.questionTitle);
             answer = itemView.findViewById(R.id.btncomment);
             cardView = itemView.findViewById(R.id.cardView);
-            like_count = itemView.findViewById(R.id.like_counter);
+            vote = itemView.findViewById(R.id.like_counter);
             answer_count = itemView.findViewById(R.id.ans_counter);
 
             refresh=itemView.findViewById(R.id.swipeRefresh);
